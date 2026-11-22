@@ -5,11 +5,11 @@
 
 ## Estructura
 ```
-data/raw/        bases originales de datos.gov.co, sin modificar, y eventos_medellin.csv (base propia, Rol 3)
-data/processed/  bases limpias, panel_publico.csv (Rol 1) y panel_final.csv (panel + eventos, Rol 3)
-notebooks/       01_limpieza_y_union.ipynb (Rol 1), 02_Union_bases.ipynb (Rol 3) y análisis exploratorio (Rol 2)
+data/raw/        bases originales de datos.gov.co, sin modificar, y eventos_medellin.csv (base propia)
+data/processed/  bases limpias, panel_publico.csv y panel_final.csv 
+notebooks/       01_limpieza_y_union.ipynb , 02_Union_bases.ipynb  y análisis exploratorio 
 src/             código de descarga, limpieza y unión
-dashboard/       dashboard (Rol 2)
+dashboard/       dashboard 
 ```
 
 ## Cómo correr el proyecto
