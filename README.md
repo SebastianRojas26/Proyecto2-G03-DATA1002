@@ -18,9 +18,8 @@ dashboard/       dashboard (Rol 2)
 pip install -r requirements.txt
 python src/descargar_datos.py     # baja ANI y Migración (datos.gov.co) a data/raw
 # además, poner a mano en data/raw: ema_anexos_sep2026.xlsx (DANE, ver enlace en src/descargar_datos.py)
-# luego abrir y correr todo el notebook:
-#   notebooks/01_limpieza_y_union.ipynb   -> limpia y genera data/processed/panel_publico.csv
-# (alternativa sin notebook: python src/limpiar_y_unir.py, produce el mismo resultado)
+python src/limpiar_y_unir.py      # limpia y genera data/processed/panel_publico.csv
+# el mismo proceso, paso a paso, está en notebooks/01_limpieza_y_union.ipynb
 ```
 
 ## Fuentes (datos abiertos; licencia: por confirmar en la ficha de cada fuente)
@@ -30,7 +29,7 @@ python src/descargar_datos.py     # baja ANI y Migración (datos.gov.co) a data/
 | DANE – Encuesta Mensual de Alojamiento (EMA), anexos sep-2026 | (Excel, [página EMA](https://www.dane.gov.co/index.php/estadisticas-por-tema/servicios/encuesta-mensual-de-alojamiento-ema); [ficha metodológica](https://www.dane.gov.co/files/operaciones/EMA/fmet-EMA.pdf)) | 2019-01 a 2026-09 (cifras desde 2023 son provisionales) | Región **Antioquia, no solo Medellín**. La tarifa es un **índice (base 2019=100), no pesos**; el anexo solo lo da por tipo de acomodación (sencilla y doble), y el panel usa también su promedio simple. |
 | Migración Colombia – Entradas de extranjeros a Colombia | 96sh-4v8d | 2012-01 a 2026-06 (país completo) | El archivo no trae el nombre del puesto migratorio, solo sus coordenadas: se filtró el Aeropuerto José María Córdova (Rionegro) por coordenadas. Suma todas las nacionalidades. Es entrada de extranjeros, no turistas (incluye otros motivos de viaje). |
 
-## Limpieza y unión (`notebooks/01_limpieza_y_union.ipynb`; mismo código en `src/limpiar_y_unir.py`)
+## Limpieza y unión (`src/limpiar_y_unir.py`; versión en notebook: `notebooks/01_limpieza_y_union.ipynb`)
 - Fechas a año-mes (`YYYY-MM`) en todas las bases.
 - Duplicados: en ANI se eliminan filas repetidas por peaje, categoría y mes (había 0).
 - **Peajes ANI elegidos: LAS PALMAS y GUARNE.** Se eligieron por estar en la ruta Medellín – Oriente antioqueño / aeropuerto José María Córdova (criterio propio del equipo, por confirmar); tienen serie completa (149 meses, 2014-01 a 2026-05) y sin duplicados. Se suma el tráfico de todas las categorías (`trafico_total`) y se guarda aparte la categoría I, vehículos livianos (`trafico_livianos`).
