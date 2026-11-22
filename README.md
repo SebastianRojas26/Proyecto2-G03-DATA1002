@@ -37,3 +37,9 @@ python src/limpiar_y_unir.py      # limpia y genera data/processed/panel_publico
 - Migración: se filtra el Aeropuerto José María Córdova por coordenadas y se suman todas las nacionalidades por mes.
 - El panel se limita a **2019-01 a 2025-12** (84 meses), periodo pedido por el equipo.
 - Salida: `data/processed/panel_publico.csv` (84 meses x 12 columnas, sin faltantes). Verificación de la unión en `data/processed/verificacion_union.txt`.
+
+## Licencias y atribución
+- **DANE (EMA):** los términos de uso del DANE autorizan usar, transformar y analizar la información citando la fuente. Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co (https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane).
+- **Tráfico vehicular ANI:** publicado por la Agencia Nacional de Infraestructura (ANI) en datos.gov.co, actualizado el 2 de septiembre de 2026. En la ficha el campo "Licencia" aparece vacío; solo trae el enlace de la fuente (https://www.ani.gov.co).
+- **Entradas de extranjeros a Colombia:** publicado por la Unidad Administrativa Especial Migración Colombia en datos.gov.co, actualizado el 20 de agosto de 2026 (frecuencia semestral). En la ficha el campo "Licencia" aparece vacío; solo trae el enlace de la fuente.
+- Los datasets de datos.gov.co se usan como datos abiertos del Portal Nacional de Datos Abiertos, citando a la entidad publicadora. Fichas consultadas el 22 de noviembre de 2026.
