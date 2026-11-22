@@ -1,0 +1,13 @@
+trafico ANI: 149944 filas crudas (2 peajes elegidos) -> 149 meses (2014-01 a 2026-05)
+EMA Antioquia: 93 meses (2019-01 a 2026-09)
+migracion: 181186 filas -> 17833 del aeropuerto JMC -> 174 meses (2012-01 a 2026-06)
+
+== VERIFICACIÓN DE LA UNIÓN (panel limitado a 2019-01 - 2025-12) ==
+panel_publico: 84 filas (meses) x 12 columnas; mes duplicados: 0
+  trafico: 149 meses en la base (84 dentro de 2019-01 a 2025-12), 84 cruzaron con el panel
+  ema: 93 meses en la base (84 dentro de 2019-01 a 2025-12), 84 cruzaron con el panel
+  migracion: 174 meses en la base (84 dentro de 2019-01 a 2025-12), 84 cruzaron con el panel
+  meses sin dato de trafico (trafico_total): 0
+  meses sin dato de ema (ocupacion_ema_antioquia): 0
+  meses sin dato de migracion (entradas_extranjeros_jmc): 0
+  periodo con las 3 bases a la vez: 2019-01 a 2025-12 (84 meses)
