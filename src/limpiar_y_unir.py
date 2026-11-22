@@ -9,7 +9,7 @@ PROC = "data/processed/"
 meses = {"enero": 1, "febrero": 2, "marzo": 3, "abril": 4, "mayo": 5, "junio": 6, "julio": 7,
          "agosto": 8, "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12}
 
-# ---------- Tráfico ANI ----------
+# Tráfico ANI
 ani = pd.read_csv(RAW + "trafico_ani.csv", dtype=str)
 ani = ani[ani["Peaje"].isin(["LAS PALMAS", "GUARNE"])].copy()
 
@@ -23,7 +23,7 @@ trafico["trafico_total"] = trafico["trafico_guarne"] + trafico["trafico_las_palm
 trafico["trafico_livianos"] = ani[ani["CategoriaTarifa"] == "I"].groupby("mes")["trafico"].sum()
 trafico = trafico.reset_index()
 
-# ---------- DANE EMA (Antioquia) ----------
+# DANE EMA (Antioquia)
 archivo = RAW + "ema_anexos_sep2026.xlsx"
 
 
@@ -47,7 +47,7 @@ tarifas["indice_tarifa_ema_antioquia"] = tarifas[["indice_tarifa_ema_sencilla",
                                                   "indice_tarifa_ema_doble"]].mean(axis=1)
 ema = ocupacion.merge(tarifas, on="mes", how="outer")
 
-# ---------- Migración Colombia (aeropuerto José María Córdova) ----------
+# Migración Colombia (aeropuerto José María Córdova)
 mig = pd.read_csv(RAW + "migracion_entradas_extranjeros.csv", dtype=str)
 mig = mig[mig["Ubicación PCM"].isin(["(6.171601,-75.427454)", "(6.17134,-75.427194)"])].copy()
 
@@ -58,7 +58,7 @@ mig["mes"] = pd.to_datetime(dict(year=mig["Año"].astype(int), month=mig["mes_nu
 migracion = mig.groupby("mes", as_index=False)["Total"].sum()
 migracion = migracion.rename(columns={"Total": "entradas_extranjeros_jmc"})
 
-# ---------- Unión mensual 2019-01 a 2025-12 ----------
+# Unión mensual 2019-01 a 2025-12
 panel = pd.DataFrame({"mes": pd.date_range("2019-01-01", "2025-12-01", freq="MS")})
 for base in [trafico, ema, migracion]:
     panel = panel.merge(base, on="mes", how="left")
@@ -67,7 +67,7 @@ panel.insert(1, "anio", panel["mes"].dt.year)
 panel.insert(2, "mes_num", panel["mes"].dt.month)
 panel["mes"] = panel["mes"].dt.strftime("%Y-%m")
 
-# ---------- Verificación ----------
+# Verificación
 inicio, fin = pd.Timestamp("2019-01-01"), pd.Timestamp("2025-12-01")
 for nombre, base in {"tráfico ANI": trafico, "EMA": ema, "migración": migracion}.items():
     en_periodo = base[(base["mes"] >= inicio) & (base["mes"] <= fin)]
