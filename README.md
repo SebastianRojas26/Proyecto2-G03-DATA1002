@@ -2,7 +2,6 @@
 
 **Pregunta analítica:** ¿Cómo se relacionan los grandes conciertos y festivales con la actividad turística de Medellín (ocupación hotelera, tarifas, llegadas internacionales, tráfico)?
 
-> Nota: el componente de arriendos se descartó por acuerdo del equipo, porque no hay datos públicos mensuales y específicos de arriendos para Medellín (la base "Arrendamiento histórico" de datos.gov.co es un listado de inmuebles del Municipio, sin fechas ni canon).
 
 ## Estructura
 ```
