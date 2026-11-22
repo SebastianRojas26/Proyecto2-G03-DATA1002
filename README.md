@@ -40,7 +40,7 @@ python src/limpiar_y_unir.py      # limpia y genera data/processed/panel_publico
 - El panel se limita a **2019-01 a 2025-12** (84 meses), periodo pedido por el equipo.
 - Salida: `data/processed/panel_publico.csv` (84 meses x 12 columnas, sin faltantes). Verificación de la unión en `data/processed/verificacion_union.txt`.
 
-## Base propia de eventos (Rol 3, `data/raw/eventos_medellin.csv`)
+## Base propia de eventos ( `data/raw/eventos_medellin.csv`)
 Grandes conciertos, festivales, ferias y temporadas en Medellín entre 2019 y 2025: 89 eventos (2019: 17, 2020: 2, 2021: 6, 2022: 21, 2023: 14, 2024: 14, 2025: 15).
 
 **Cómo se construyó**
@@ -48,7 +48,7 @@ Grandes conciertos, festivales, ferias y temporadas en Medellín entre 2019 y 20
 2. **Escala:** solo escenarios grandes (Estadio Atanasio Girardot, La Macarena, Estadio Cincuentenario, Parque Norte, Plaza Mayor, Aeroparque Juan Pablo II) o espacio público en eventos de ciudad.
 3. **Regla de inclusión:** un evento entra solo si hay una nota de prensa del mismo día o posterior, o un balance oficial (p. ej., Alcaldía de Medellín), que confirme que se hizo. Un anuncio previo más setlist.fm no alcanza: hubo eventos anunciados que se cancelaron (Young Miko 2024, Bad Bunny 2019, el primer día de Afterlife 2024 por lluvia).
 4. **Escenario:** siempre el que reporta la prensa.
-5. Se excluyen eventos virtuales (2020–2021), los de fuera de Medellín (Rionegro, Copacabana) y los que no tenían prensa posterior.
+5. Se excluyen eventos virtuales (2020–2021), los de fuera de Medellín (Rionegro, Copacabana) y los que no tenían información de prensa posterior.
 
 **Columnas**
 
@@ -65,7 +65,7 @@ Grandes conciertos, festivales, ferias y temporadas en Medellín entre 2019 y 20
 
 **Criterio de "evento grande":** cumple al menos una condición: aforo ≥ 20.000, internacional, tipo `festival`/`feria`/`feria_comercial`/`temporada`, o escenario Estadio Atanasio Girardot. 79 de los 89 eventos son grandes.
 
-## Unión con los eventos (Rol 3, `notebooks/02_Union_bases.ipynb`)
+## Unión con los eventos ( `notebooks/02_Union_bases.ipynb`)
 1. Se carga `panel_publico.csv` y `eventos_medellin.csv`; las fechas se pasan a `datetime` (eventos de un día: `fecha_fin` = `fecha_inicio`).
 2. Cada evento se pasa a los meses que dura (`period_range` + `explode`): por ejemplo, los Alumbrados de diciembre a enero cuentan en los dos meses.
 3. Se agrega por mes (`groupby` + `agg`) y se une al panel por la columna `mes` con `merge(how="left", validate="one_to_one")`. Los meses sin eventos quedan en 0.
@@ -87,7 +87,6 @@ Grandes conciertos, festivales, ferias y temporadas en Medellín entre 2019 y 20
 **Limitaciones de los eventos**
 - Es un mínimo verificado: `n_eventos` subestima la actividad real.
 - Los datos turísticos son mensuales y de Antioquia; un concierto de 2–3 días se diluye en el mes.
-- Urban Music Awards 2019 y Rels B 2022 se confirmaron por el equipo y no por prensa posterior.
 
 ## Licencias y atribución
 - **DANE (EMA):** los términos de uso del DANE autorizan usar, transformar y analizar la información citando la fuente. Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co (https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane).
