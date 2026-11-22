@@ -1,6 +1,6 @@
 # Turismo y conciertos/festivales en Medellín (DATA-1002, Proyecto 2)
 
-**Pregunta analítica:** ¿Cómo se relacionan los grandes conciertos y festivales con la actividad turística de Medellín (ocupación hotelera, tarifas, llegadas internacionales, tráfico)?
+**Pregunta analítica:** Entre 2019 y 2025, ¿Los meses con grandes conciertos y festivales en Medellín se asocian con un incremento en la actividad turística de la región?
 
 
 ## Estructura
