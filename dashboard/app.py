@@ -3,6 +3,13 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
+def abreviar(x):
+    if abs(x) >= 1_000_000:
+        return f"{x/1_000_000:.1f}M"
+    if abs(x) >= 1_000:
+        return f"{x/1_000:.1f}k"
+    return f"{x:.1f}"
+
 st.set_page_config(layout="wide")
 df = pd.read_csv("data/processed/panel_final.csv")
 df["fecha"] = pd.to_datetime(df["mes"], format="%Y-%m")
@@ -75,8 +82,10 @@ st.subheader("Meses con y sin evento grande")
 df_comp = df_f.groupby("evento", as_index=False)[ind].mean()
 
 izq, der = st.columns(2)
-fig = px.bar(data_frame=df_comp, x="evento", y=ind, color="evento", text_auto=".1f")
+df_comp["etiqueta"] = df_comp[ind].apply(abreviar)
+fig = px.bar(data_frame=df_comp, x="evento", y=ind, color="evento", text="etiqueta")
 fig.update_layout(xaxis_title="", yaxis_title=ind_nombre, showlegend=False)
+fig.update_yaxes(tickformat=".2s")
 izq.plotly_chart(fig, width="stretch")
 
 tabla = (df_f.groupby("evento", as_index=False)
@@ -85,6 +94,10 @@ tabla = (df_f.groupby("evento", as_index=False)
               tarifa=("indice_tarifa_ema_antioquia", "mean"),
               extranjeros=("entradas_extranjeros_jmc", "mean"),
               trafico=("trafico_total", "mean")).round(1))
+
+tabla["extranjeros"] = tabla["extranjeros"].apply(lambda x: f"{x:,.0f}")
+tabla["trafico"] = tabla["trafico"].apply(lambda x: f"{x:,.0f}")
+
 der.dataframe(tabla, hide_index=True, width="stretch")
 
 if df_comp.shape[0] == 2:
