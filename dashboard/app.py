@@ -19,7 +19,7 @@ INDICADORES = {
 
 st.title("Conciertos, festivales y turismo en Medellín")
 st.caption("Elaborado con el panel mensual del proyecto (panel_final.csv)")
-st.markdown("**Pregunta analítica:** ¿Cómo se relacionan los grandes conciertos y festivales con la actividad turística de Medellín (ocupación hotelera, tarifas, llegadas internacionales, tráfico) y cómo evolucionan los arriendos frente a esa presión turística?")
+st.markdown("**Pregunta analítica:** Entre 2019 y 2025, ¿Los meses con grandes conciertos y festivales en Medellín se asocian con un incremento en la actividad turística de la región?")
 
 # Filtros 
 st.sidebar.header("FILTROS")
@@ -111,23 +111,7 @@ st.caption("Correlación no implica causalidad.")
 
 st.divider()
 
-#Arriendos frente a turismo
-st.subheader("Arriendos frente a turismo")
-col_arriendo = [x for x in df.columns if "arriendo" in x.lower()]
-if len(col_arriendo) > 0:
-    arr = col_arriendo[0]
-    izq, der = st.columns(2)
-    fig = px.line(data_frame=df_f, x="fecha", y=arr)
-    fig.update_layout(xaxis_title="Fecha", yaxis_title="Arriendos")
-    izq.plotly_chart(fig, width="stretch")
 
-    fig = px.scatter(data_frame=df_f, x=ind, y=arr, hover_name="mes")
-    fig.update_layout(xaxis_title=ind_nombre, yaxis_title="Arriendos")
-    der.plotly_chart(fig, width="stretch")
-else:
-    st.warning("El panel final todavía no tiene la variable de arriendos. Esta sección se activa sola cuando panel_final.csv traiga una columna con 'arriendo' en el nombre.")
-
-st.divider()
 
 # Limitaciones 
 st.subheader("Limitaciones de los datos")
