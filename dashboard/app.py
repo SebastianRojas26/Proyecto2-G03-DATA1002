@@ -11,6 +11,18 @@ def abreviar(x):
     return f"{x:.1f}"
 
 st.set_page_config(layout="wide")
+st.markdown("""
+<style>
+h1, h2, h3 { color: #12263A; }
+[data-testid="stMetric"] {
+    background-color: #F2F5F8;
+    border-radius: 10px;
+    padding: 12px;
+}
+[data-testid="stMetricValue"] { color: #0F6CBD; font-weight: 700; }
+[data-testid="stSidebar"] { background-color: #E3ECF5; }
+</style>
+""", unsafe_allow_html=True)
 df = pd.read_csv("data/processed/panel_final.csv")
 df["fecha"] = pd.to_datetime(df["mes"], format="%Y-%m")
 df["temporada"] = np.where(df["temporada_alta"] == 1, "Alta", "Baja")
@@ -24,9 +36,18 @@ INDICADORES = {
     "Tráfico vehicular (Las Palmas + Guarne)": "trafico_total",
 }
 
-st.title("Conciertos, festivales y turismo en Medellín")
+st.markdown("""
+<div style="background-color:#12263A; padding:28px 32px; border-radius:12px; border-bottom:6px solid #D81E5B; margin-bottom:8px;">
+    <div style="color:#F4A261; font-size:14px; font-weight:700; letter-spacing:2px;">DATA-1002 · PROYECTO 2</div>
+    <div style="color:#FFFFFF; font-size:40px; font-weight:800; line-height:1.15; margin-top:6px;">Conciertos, festivales y turismo en Medellín</div>
+</div>
+""", unsafe_allow_html=True)
 st.caption("Elaborado con el panel mensual del proyecto (panel_final.csv)")
-st.markdown("**Pregunta analítica:** Entre 2019 y 2025, ¿Los meses con grandes conciertos y festivales en Medellín se asocian con un incremento en la actividad turística de la región?")
+st.markdown("""
+<div style="background-color:#F2F5F8; padding:16px 20px; border-radius:10px; border-left:6px solid #D81E5B; font-size:18px; color:#12263A;">
+    <b>Pregunta analítica:</b> Entre 2019 y 2025, ¿los meses con grandes conciertos y festivales en Medellín se asocian con un incremento en la actividad turística de la región?
+</div>
+""", unsafe_allow_html=True)
 
 # Filtros 
 st.sidebar.header("FILTROS")
@@ -83,7 +104,7 @@ df_comp = df_f.groupby("evento", as_index=False)[ind].mean()
 
 izq, der = st.columns(2)
 df_comp["etiqueta"] = df_comp[ind].apply(abreviar)
-fig = px.bar(data_frame=df_comp, x="evento", y=ind, color="evento", text="etiqueta")
+fig = px.bar(data_frame=df_comp, x="evento", y=ind, color="evento", text="etiqueta", color_discrete_map={"Con evento grande": "#D81E5B", "Sin evento grande": "#89CFF0"})
 fig.update_layout(xaxis_title="", yaxis_title=ind_nombre, showlegend=False)
 fig.update_yaxes(tickformat=".2s")
 izq.plotly_chart(fig, width="stretch")
@@ -116,7 +137,11 @@ st.subheader("Correlación de los eventos grandes con el turismo")
 df_corr = pd.DataFrame({
     "indicador": list(INDICADORES),
     "correlacion": [df_f["n_eventos_grandes"].corr(df_f[x]) for x in INDICADORES.values()]})
-fig = px.bar(data_frame=df_corr, x="correlacion", y="indicador", orientation="h", text_auto=".2f")
+fig = px.bar(data_frame=df_corr, x="correlacion", y="indicador", orientation="h",
+             text_auto=".2f", color="correlacion",
+             color_continuous_scale=[[0, "#0F6CBD"], [0.5, "#C9D3DE"], [1, "#D81E5B"]],
+             range_color=[-0.5, 0.5])
+fig.update_coloraxes(showscale=False)
 fig.update_layout(xaxis_title="Correlación con el número de eventos grandes", yaxis_title="",
                   showlegend=False, xaxis_range=[-1, 1])
 st.plotly_chart(fig, width="stretch")
